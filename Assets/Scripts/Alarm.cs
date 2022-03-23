@@ -6,8 +6,8 @@ public class Alarm : MonoBehaviour
 {
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private float _startVolume;
-    private float _step = 1f;
-    private float _target = -1;
+    private float _step = 0.2f;
+    private float _target = 1;
     private bool _isPlaying = false;
 
     private void Start()
@@ -31,7 +31,14 @@ public class Alarm : MonoBehaviour
         {
             _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _target, _step);
             yield return waitHalfSecond;
-            _target *= _target;
+            if(_target == 1)
+            {
+                _target = 0;
+            }
+            else if(_target == 0)
+            {
+                _target = 1;
+            }
         }
         StopCoroutine(changeVolumeJob);
     }
