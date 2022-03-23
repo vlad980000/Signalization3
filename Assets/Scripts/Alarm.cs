@@ -19,11 +19,23 @@ public class Alarm : MonoBehaviour
     {
         var waitOneSecond = new WaitForSeconds(1f);
         _audioSource.Play();
+        int iterationCount = 5;
 
-        while(_isPlaying == true)
+        while(_isPlaying == false)
         {
-            VolumeCotroller();
-            yield return waitOneSecond;
+            for (int i = 0; i < iterationCount; i++)
+            {
+                VolumeCotroller();
+                yield return waitOneSecond;
+            }
+            if(_target == 1)
+            {
+                _target--;
+            }
+            else if(_target == 0)
+            {
+                _target++;
+            }
         }     
     }
 
