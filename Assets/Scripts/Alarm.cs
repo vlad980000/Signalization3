@@ -17,18 +17,19 @@ public class Alarm : MonoBehaviour
 
     public void StartCoroutine()
     {
-        StartCoroutine(ChangeVolume());
+        var changeVolumeJob = StartCoroutine(ChangeVolume());
+        StopCoroutine(changeVolumeJob);
     }
 
     private IEnumerator ChangeVolume()
     {
-        var changeVolumeJob = StartCoroutine(ChangeVolume());
         var waitHalfSecond = new WaitForSeconds(0.5f);
         _isPlaying = true;
         _audioSource.Play();
 
         while (_isPlaying == true)
         {
+            yield return null;
             int stepCount = 0;
             int maxStepCount = 5;
 
@@ -47,7 +48,7 @@ public class Alarm : MonoBehaviour
                 _target = 1;
             }
         }
-        StopCoroutine(changeVolumeJob);
+        _audioSource.Stop();
     }
 
     public void EndAlarm()
