@@ -19,7 +19,7 @@ public class Door : MonoBehaviour
             else if(_isPlayerInsight == true)
             {
                 _isPlayerInsight = false;
-                _alarm.EndAlarm();
+                _alarm.AlarmEnd();
             }
         }
     }

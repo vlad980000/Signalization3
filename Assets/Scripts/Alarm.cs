@@ -9,50 +9,32 @@ public class Alarm : MonoBehaviour
     private float _step = 0.2f;
     private float _target = 1;
     private bool _isPlaying = false;
-
-    private void Start()
-    {
-        _audioSource.volume = _startVolume;
-    }
-
+    
     public void StartCoroutine()
     {
-        var changeVolumeJob = StartCoroutine(ChangeVolume());
-        StopCoroutine(changeVolumeJob);
+        var stratAlarmController = StartCoroutine(AlarmController());
     }
 
-    private IEnumerator ChangeVolume()
+    private IEnumerator AlarmController()
     {
-        var waitHalfSecond = new WaitForSeconds(0.5f);
-        _isPlaying = true;
+        var waitOneSecond = new WaitForSeconds(1f);
         _audioSource.Play();
 
-        while (_isPlaying == true)
+        while(_isPlaying == true)
         {
-            yield return null;
-            int stepCount = 0;
-            int maxStepCount = 5;
-
-            while(stepCount == maxStepCount)
-            {
-                stepCount++;
-                _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _target, _step * Time.deltaTime);
-                yield return waitHalfSecond;
-            }
-            if(_target == 1)
-            {
-                _target = 0;
-            }
-            else if(_target == 0)
-            {
-                _target = 1;
-            }
-        }
-        _audioSource.Stop();
+            VolumeCotroller();
+            yield return waitOneSecond;
+        }     
     }
 
-    public void EndAlarm()
+    private void VolumeCotroller()
+    {
+        _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _target, _step * Time.deltaTime);
+    }
+
+    public void AlarmEnd()
     {
         _isPlaying = false;
+        _audioSource.Stop();
     }
 }
