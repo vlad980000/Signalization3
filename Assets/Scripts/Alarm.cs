@@ -13,18 +13,22 @@ public class Alarm : MonoBehaviour
     private void Start()
     {
         _audioSource.volume = _startVolume;
+    }
+
+    public void StartCoroutine()
+    {
         StartCoroutine(ChangeVolume());
     }
 
     private IEnumerator ChangeVolume()
     {
+        var changeVolumeJob = StartCoroutine(ChangeVolume());
         var waitHalfSecond = new WaitForSeconds(0.5f);
         _isPlaying = true;
-        var changeVolumeJob = StartCoroutine(ChangeVolume());
+        _audioSource.Play();
 
         while (_isPlaying == true)
         {
-            _audioSource.Play();
             _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _target, _step);
             yield return waitHalfSecond;
             _target *= _target;

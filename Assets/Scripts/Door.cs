@@ -14,7 +14,7 @@ public class Door : MonoBehaviour
             if(_isPlayerInsight == false)
             {
                 _isPlayerInsight = true;
-                _alarm.gameObject;
+                _alarm.StartCoroutine();
             }
             else if(_isPlayerInsight == true)
             {
