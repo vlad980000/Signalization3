@@ -29,12 +29,15 @@ public class Alarm : MonoBehaviour
 
         while (_isPlaying == true)
         {
-            for (int i = 0; i < _target/_step; i++)
+            int stepCount = 0;
+            int maxStepCount = 5;
+
+            while(stepCount == maxStepCount)
             {
-                _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _target, _step);
+                stepCount++;
+                _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _target, _step * Time.deltaTime);
                 yield return waitHalfSecond;
             }
-
             if(_target == 1)
             {
                 _target = 0;
