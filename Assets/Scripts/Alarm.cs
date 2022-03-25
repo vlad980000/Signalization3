@@ -9,10 +9,11 @@ public class Alarm : MonoBehaviour
     private float _step = 0.2f;
     private float _target = 0;
     private bool _isPlaying = false;
-    
+    private Coroutine _stratAlarmController;
+
     public void StartCoroutine()
     {
-        var stratAlarmController = StartCoroutine(AlarmController());
+        _stratAlarmController = StartCoroutine(AlarmController());
         _audioSource.volume = _startVolume;
     }
 
@@ -48,5 +49,6 @@ public class Alarm : MonoBehaviour
     {
         _isPlaying = false;
         _audioSource.Stop();
+        StopCoroutine(_stratAlarmController);
     }
 }
