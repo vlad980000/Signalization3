@@ -5,6 +5,7 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {
     [SerializeField] private Alarm _alarm;
+
     private bool _isPlayerInsight = false;
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -19,7 +20,7 @@ public class Door : MonoBehaviour
             else if(_isPlayerInsight == true)
             {
                 _isPlayerInsight = false;
-                _alarm.AlarmEnd();
+                _alarm.InterruptAlarm();
             }
         }
     }
