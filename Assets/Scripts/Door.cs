@@ -12,15 +12,15 @@ public class Door : MonoBehaviour
     {
         if(collision.gameObject.TryGetComponent<Player>(out Player player))
         {
-            if(_isPlayerInsight == false)
+            _isPlayerInsight = _isPlayerInsight == true?false:true;
+
+            if(_isPlayerInsight == true)
             {
-                _isPlayerInsight = true;
-                _alarm.StartCoroutine();
+                _alarm.TurnOn();
             }
-            else if(_isPlayerInsight == true)
+            else
             {
-                _isPlayerInsight = false;
-                _alarm.InterruptAlarm();
+                _alarm.TurnOff();
             }
         }
     }

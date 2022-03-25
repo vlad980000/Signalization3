@@ -11,14 +11,7 @@ public class Alarm : MonoBehaviour
     private float _step = 0.2f;
     private float _target = 0;
     private bool _isPlaying = false;
-
-
-    public void StartCoroutine()
-    {
-        _startCoroutine = StartCoroutine(RegulatingVolume());
-        _audioSource.volume = _startVolume;
-    }
-
+    
     private IEnumerator RegulatingVolume()
     {
         var waitOneSecond = new WaitForSeconds(1f);
@@ -31,18 +24,19 @@ public class Alarm : MonoBehaviour
                 _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _target, _step);
                 yield return waitOneSecond;
             }
-            if(_target == 1)
-            {
-                _target--;
-            }
-            else if(_target == 0)
-            {
-                _target++;
-            }
-        }     
+            _target = _target == 1 ? 0 : 1;
+        }
     }
 
-    public void InterruptAlarm()
+    public void TurnOn()
+    {
+        _startCoroutine = StartCoroutine(RegulatingVolume());
+        _audioSource.volume = _startVolume;
+    }
+
+    
+
+    public void TurnOff()
     {
         _isPlaying = false;
         _audioSource.Stop();
