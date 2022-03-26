@@ -12,7 +12,7 @@ public class Door : MonoBehaviour
     {
         if(collision.gameObject.TryGetComponent<Player>(out Player player))
         {
-            _isPlayerInsight = _isPlayerInsight == true?false:true;
+            _isPlayerInsight = !_isPlayerInsight;
 
             if(_isPlayerInsight == true)
             {

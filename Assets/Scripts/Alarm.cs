@@ -7,7 +7,7 @@ public class Alarm : MonoBehaviour
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private float _startVolume;
 
-    private Coroutine _startCoroutine;
+    private Coroutine _coroutine;
     private float _step = 0.2f;
     private float _target = 0;
     private bool _isPlaying = false;
@@ -17,7 +17,7 @@ public class Alarm : MonoBehaviour
         var waitOneSecond = new WaitForSeconds(1f);
         _audioSource.Play();
 
-        while(_isPlaying == false)
+        while(true)
         {
             while (_audioSource.volume != _target)
             {
@@ -30,16 +30,14 @@ public class Alarm : MonoBehaviour
 
     public void TurnOn()
     {
-        _startCoroutine = StartCoroutine(RegulatingVolume());
+        _coroutine = StartCoroutine(RegulatingVolume());
         _audioSource.volume = _startVolume;
     }
-
-    
 
     public void TurnOff()
     {
         _isPlaying = false;
         _audioSource.Stop();
-        StopCoroutine(_startCoroutine);
+        StopCoroutine(_coroutine);
     }
 }
